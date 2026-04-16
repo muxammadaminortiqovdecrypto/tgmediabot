@@ -1,6 +1,5 @@
 import asyncio
 import json
-import logging
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
@@ -10,9 +9,6 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, Message
 from aiogram.enums import ParseMode
 from dotenv import load_dotenv
 import os
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -159,9 +155,8 @@ class TelegramMultimediaBot:
                     video=video_url,
                     caption="Sample Video - Multimedia Content"
                 )
-            except Exception as e:
+            except Exception:
                 await message.answer("Sorry, I couldn't send the video. Please try again later.")
-                logger.error(f"Error sending video: {e}")
         
         @self.dp.message(F.text == "Image")
         async def send_image(message: Message):
@@ -172,9 +167,8 @@ class TelegramMultimediaBot:
                     photo=image_url,
                     caption="Sample Image - Multimedia Content"
                 )
-            except Exception as e:
+            except Exception:
                 await message.answer("Sorry, I couldn't send the image. Please try again later.")
-                logger.error(f"Error sending image: {e}")
         
         @self.dp.message(F.text == "PDF Document")
         async def send_pdf(message: Message):
@@ -185,9 +179,8 @@ class TelegramMultimediaBot:
                     document=pdf_url,
                     caption="Sample PDF Document - Multimedia Content"
                 )
-            except Exception as e:
+            except Exception:
                 await message.answer("Sorry, I couldn't send the PDF document. Please try again later.")
-                logger.error(f"Error sending PDF: {e}")
         
         @self.dp.message(F.text == "Audio")
         async def send_audio(message: Message):
@@ -199,9 +192,8 @@ class TelegramMultimediaBot:
                     title="Sample Audio",
                     performer="Multimedia Bot"
                 )
-            except Exception as e:
+            except Exception:
                 await message.answer("Sorry, I couldn't send the audio file. Please try again later.")
-                logger.error(f"Error sending audio: {e}")
         
         @self.dp.message(F.text == "About Bot")
         async def about_bot(message: Message):
@@ -261,18 +253,17 @@ Registration completed successfully!
             )
     
     async def run(self):
-        logger.info("bot ishlamoqda")
-        logger.info("Starting Telegram Multimedia Bot...")
+        print("bot ishlamoqda")
         await self.dp.start_polling(self.bot)
 
 def main():
     try:
         bot = TelegramMultimediaBot()
         asyncio.run(bot.run())
-    except Exception as e:
-        logger.error(f"Bot startup failed: {e}")
+    except Exception:
+        pass
     finally:
-        logger.info("bot toxtadi")
+        print("bot toxtadi")
 
 if __name__ == "__main__":
     main()
